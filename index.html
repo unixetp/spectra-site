@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectra</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gradients {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+        }
+        .header {
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+        }
+
+        .header::before {
+            content: 'Spectra';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(125, 58, 235, 0.9), transparent 40%),
+                        radial-gradient(circle at 70% 50%, rgba(43, 138, 245, 0.9), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(235, 58, 125, 0.9), transparent 60%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .gradient {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+
+        .gradient:nth-child(1) {
+            background: radial-gradient(circle at 20% 20%, #7d3aeb, transparent 50%);
+            width: 400px;
+            height: 400px;
+            top: 10%;
+            left: 5%;
+        }
+
+        .gradient:nth-child(2) {
+            background: radial-gradient(circle at 50% 50%, #2b8af5, transparent 60%);
+            width: 600px;
+            height: 600px;
+            top: 50%;
+            right: -10%;
+        }
+
+        .gradient:nth-child(3) {
+            background: radial-gradient(circle at 80% 80%, #eb3a7d, transparent 55%);
+            width: 350px;
+            height: 350px;
+            bottom: -5%;
+            left: 20%;
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .image-container {
+            margin-bottom: 30px;
+            border: 2px solid #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 800px;
+            backdrop-filter: blur(20px);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .preview-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            mix-blend-mode: screen;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            color: #ffffff;
+            background-color: transparent;
+            border: 2px solid #ffffff;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            position: relative;
+        }
+
+        .download-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .image-container {
+                margin: 20px;
+            }
+            
+            .download-btn {
+                padding: 12px 30px;
+                font-size: 1em;
+            }
+
+            .gradient {
+                filter: blur(60px);
+            }
+        }
+        .image-container {
+            margin-bottom: 30px;
+            border: 2px solid #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 800px;
+            backdrop-filter: blur(20px);
+            background-color: rgba(0, 0, 0, 0.4);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            mix-blend-mode: screen;
+            transform-origin: center center;
+        }
+
+        .image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .image-container:hover {
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+        }
+
+        .image-container:hover::after {
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Spectra</div>
+    <div class="gradients">
+        <div class="gradient"></div>
+        <div class="gradient"></div>
+        <div class="gradient"></div>
+    </div>
+    
+    <div class="content">
+        <div class="image-container">
+            <img src="image.png" alt="AMOLED Preview" class="preview-image">
+        </div>
+        <a href="#" class="download-btn">Download Now</a>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageContainer = document.querySelector('.image-container');
+            const image = document.querySelector('.preview-image');
+
+            const applyTilt = (e) => {
+                const rect = imageContainer.getBoundingClientRect();
+                const centerX = (rect.left + rect.right) / 2;
+                const centerY = (rect.top + rect.bottom) / 2;
+                
+                const rotateY = (e.clientX - centerX) * 0.02;
+                const rotateX = (centerY - e.clientY) * 0.02;
+                
+                imageContainer.style.transform = `
+                    perspective(1000px)
+                    rotateX(${rotateX}deg)
+                    rotateY(${rotateY}deg)
+                `;
+
+                image.style.transform = `
+                    translateX(${rotateY * 0.5}px)
+                    translateY(${rotateX * 0.5}px)
+                `;
+
+                imageContainer.style.boxShadow = `
+                    ${-rotateY * 2}px ${rotateX * 2}px 30px rgba(0, 0, 0, 0.3)
+                `;
+            };
+
+            const resetTilt = () => {
+                imageContainer.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+                imageContainer.style.boxShadow = 'none';
+            };
+
+            imageContainer.addEventListener('mousemove', applyTilt);
+            imageContainer.addEventListener('mouseleave', resetTilt);
+        });
+    </script>
+</body>
+</html>
