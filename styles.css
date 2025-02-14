@@ -320,6 +320,8 @@ footer p {
   }
 }
 
+/*
+
 .warning-banner {
   position: fixed;
   top: 60px;
@@ -350,4 +352,37 @@ footer p {
 
 .warning-banner a:hover {
   color: #ff4444;
+}
+*/
+
+.warning-banner {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 255, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  text-align: center;
+  color: #3cb371;
+  font-weight: bold;
+  z-index: 998;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.warning-banner.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.warning-banner a {
+  color: #3cb371;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.warning-banner a:hover {
+  color: #2e8b57;
 }
