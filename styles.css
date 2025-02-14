@@ -28,7 +28,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
+  padding: 10px 40px;
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
   position: fixed;
@@ -44,12 +44,12 @@ header {
 }
 
 .logo img {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
 }
 
 .logo h1 {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   background: linear-gradient(135deg, #a8b6fb, #fca5b0);
   background-clip: text;
@@ -64,13 +64,14 @@ header {
 }
 
 .nav-btn {
-  padding: 10px 20px;
+  padding: 8px 16px;
   border-radius: 5px;
   text-decoration: none;
   font-weight: bold;
   transition: all 0.3s ease;
   border: 1px solid rgb(33, 33, 36);
   color: #bc8da6;
+  font-size: 14px;
 }
 
 .nav-btn.active {
@@ -317,4 +318,36 @@ footer p {
   to {
     transform: translateY(0);
   }
+}
+
+.warning-banner {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  text-align: center;
+  color: #ff6b6b;
+  font-weight: bold;
+  z-index: 998;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.warning-banner.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.warning-banner a {
+  color: #ff6b6b;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.warning-banner a:hover {
+  color: #ff4444;
 }

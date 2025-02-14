@@ -37,6 +37,10 @@
     </nav>
   </header>
 
+  <div class="warning-banner" id="warningBanner">
+    <p>My honest reaction: <a href="1.html" target="_blank">fr</a></p>
+  </div>
+
   <main>
     <div class="blur-circle top"></div>
     <div class="blur-circle bottom"></div>
@@ -88,6 +92,8 @@
       });
 
       const introOverlay = document.querySelector('.intro-overlay');
+      const warningBanner = document.getElementById('warningBanner');
+
       let hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
 
       function playIntro() {
@@ -104,12 +110,22 @@
 
             setTimeout(() => {
               introOverlay.style.display = 'none';
+              warningBanner.classList.add('show');
+
+              setTimeout(() => {
+                warningBanner.classList.remove('show');
+              }, 5000);
+
             }, 500);
 
             sessionStorage.setItem('hasSeenIntro', 'true');
           }, 3500);
         } else {
           introOverlay.style.display = 'none';
+          warningBanner.classList.add('show');
+          setTimeout(() => {
+              warningBanner.classList.remove('show');
+            }, 5000);
         }
       }
 
@@ -117,14 +133,23 @@
       if (performance.navigation.type === performance.navigation.TYPE_RELOAD ||
           performance.navigation.type === performance.navigation.TYPE_BACK_FORWARD) {
         introOverlay.style.display = 'none';
+        warningBanner.classList.add('show');
+        setTimeout(() => {
+              warningBanner.classList.remove('show');
+            }, 500000);
       } else {
         playIntro();
       }
 
       window.addEventListener('popstate', () => {
         introOverlay.style.display = 'none';
+        warningBanner.classList.add('show');
+        setTimeout(() => {
+              warningBanner.classList.remove('show');
+            }, 5000);
       });
     });
+
   </script>
 </body>
 </html>
